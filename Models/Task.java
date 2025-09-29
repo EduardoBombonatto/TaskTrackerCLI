@@ -10,11 +10,36 @@ public class Task {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Task(String description){
+    public Task(String description) {
         this.id = ++lastID; //start in 1
         this.description = description;
         this.status = Status.TODO;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public static Task jsonToTask(String json) {
+        json = json.replace("{", "").replace("}", "").replace("\"", "");
+        String[] field = json.split(","); //id:1, decription:New task ...
+
+        String id = field[0].split(":")[1].strip();
+        String description = field[1].split(":")[1].strip();
+        String statusStr = field[2].split(":")[1].strip();
+        String createdAtStr = field[3].split("[a-z]:")[1].strip();
+        String updatedAtStr = field[4].split("[a-z]:")[1].strip();
+
+        Status status = Status.valueOf(statusStr.toUpperCase().replace(" ", "_"));
+
+        Task task = new Task(description);
+        task.id = Integer.parseInt(id);
+        task.status = status;
+        task.createdAt = LocalDateTime.parse(createdAtStr);
+        task.updatedAt = LocalDateTime.parse(updatedAtStr);
+
+        if (Integer.parseInt(id) > lastID) {
+            lastID = Integer.parseInt(id);
+        }
+
+        return task;
     }
 }
