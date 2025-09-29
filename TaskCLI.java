@@ -28,18 +28,21 @@ public class TaskCLI {
             case "delete":
                 if (args.length < 2) {
                     System.out.println("Usage: TaskCLI delete <Task ID>");
+                    System.exit(0);
                 }
                 taskManager.deleteTask(args[1]);
                 break;
             case "mark-in-progress":
                 if (args.length < 2) {
                     System.out.println("Usage: TaskCLI mark-in-progress <Task ID>");
+                    System.exit(0);
                 }
                 taskManager.markInProgressTask(args[1]);
                 break;
             case "mark-done":
                 if (args.length < 2) {
                     System.out.println("Usage: TaskCLI mark-done <Task ID>");
+                    System.exit(0);
                 }
                 taskManager.markDoneTask(args[1]);
                 break;
@@ -47,18 +50,19 @@ public class TaskCLI {
                 if (args.length < 2) {
                     taskManager.listTasks("All");
                 } else {
-                    Status filterStatus;
+                    Status filterStatus = null;
                     try {
                         filterStatus = Status.valueOf(args[1].toUpperCase().replace("-", "_"));
                     } catch (IllegalArgumentException e) {
                         System.out.println("Invalid status: " + args[1]);
-                        return;
+                        System.exit(1); // BUGFIX: mudei return para exit com código de erro
                     }
                     taskManager.listTasks(filterStatus.toString());
                 }
                 break;
             default:
                 System.out.println("Unknown command: " + command);
+                System.exit(1);
                 break;
         }
         taskManager.saveTasks();
