@@ -18,6 +18,15 @@ public class Task {
         this.updatedAt = LocalDateTime.now();
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String taskToJson() {
+        return "{\"id\":\"" + id + "\",\n \"description\":\"" + description.strip() + "\",\n \"status\":\"" + status.toString() +
+                "\",\n \"createdAt\":\"" + createdAt + "\",\n \"updatedAt\":\"" + updatedAt + "\"\n}";
+    }
+
     public static Task jsonToTask(String json) {
         json = json.replace("{", "").replace("}", "").replace("\"", "");
         String[] field = json.split(","); //id:1, decription:New task ...

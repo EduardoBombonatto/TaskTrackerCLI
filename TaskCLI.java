@@ -6,6 +6,7 @@ public class TaskCLI {
         }
 
         String command = args[0];
+        TaskManager taskManager = new TaskManager();
 
         switch (command) {
             case "add":
@@ -13,7 +14,7 @@ public class TaskCLI {
                     System.out.println("Usage: TaskCLI add <Task>");
                     System.exit(0);
                 }
-                //taskManager.addTask(args[1]);
+                taskManager.addTask(args[1]);
                 break;
             case "update":
                 if (args.length < 3) {
@@ -54,6 +55,6 @@ public class TaskCLI {
                 System.out.println("Unknown command: " + command);
                 break;
         }
-        //taskManager.saveTasks();
+        taskManager.saveTasks();
     }
 }

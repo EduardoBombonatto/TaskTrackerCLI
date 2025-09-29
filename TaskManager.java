@@ -36,4 +36,29 @@ public class TaskManager {
         }
         return tasks;
     }
+
+    public void saveTasks() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[\n");
+        for (int i = 0; i < tasks.size(); i++) {
+            sb.append(tasks.get(i).taskToJson());
+            if (i < tasks.size() - 1) {
+                sb.append(",\n");
+            }
+        }
+        sb.append("\n]");
+
+        String jsonContent =  sb.toString();
+        try {
+            Files.writeString(FILE_PATH, jsonContent);
+        } catch (IOException e) {
+            System.out.println("Error writing file");
+        }
+    }
+
+    public void addTask(String description) {
+        Task newTask = new Task(description);
+        tasks.add(newTask);
+        System.out.println("Task added Successfully (ID: " + newTask.getId() + ")");
+    }
 }
