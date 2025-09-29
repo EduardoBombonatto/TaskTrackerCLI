@@ -22,8 +22,22 @@ public class Task {
         return id;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
     public void updateDescription(String description) {
         this.description = description;
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void markInProgress() {
+        this.status = Status.IN_PROGRESS;
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void markDone() {
+        this.status = Status.DONE;
         this.updatedAt = LocalDateTime.now();
     }
 

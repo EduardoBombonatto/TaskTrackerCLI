@@ -1,3 +1,5 @@
+import Models.Status;
+
 public class TaskCLI {
     public static void main(String[] args) {
         TaskManager taskManager = new TaskManager();
@@ -33,22 +35,26 @@ public class TaskCLI {
                 if (args.length < 2) {
                     System.out.println("Usage: TaskCLI mark-in-progress <Task ID>");
                 }
-                //taskManager.markInProgressTask(args[1]);
+                taskManager.markInProgressTask(args[1]);
                 break;
             case "mark-done":
                 if (args.length < 2) {
                     System.out.println("Usage: TaskCLI mark-done <Task ID>");
                 }
-                //taskManager.markDoneTask(args[1]);
+                taskManager.markDoneTask(args[1]);
                 break;
             case "list":
                 if (args.length < 2) {
-                    //taskManager.listTasks("all")
-                    System.out.println("All tasks");
+                    taskManager.listTasks("All");
                 } else {
-                    String filterStatus = args[1].toLowerCase();
-                    //askManager.listTasks(filterStatus);
-                    System.out.println("All taks: " + filterStatus);
+                    Status filterStatus;
+                    try {
+                        filterStatus = Status.valueOf(args[1].toUpperCase().replace("-", "_"));
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Invalid status: " + args[1]);
+                        return;
+                    }
+                    taskManager.listTasks(filterStatus.toString());
                 }
                 break;
             default:

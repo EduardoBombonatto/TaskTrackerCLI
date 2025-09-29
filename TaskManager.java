@@ -70,18 +70,37 @@ public class TaskManager {
     }
 
     public void updateTask(String id, String newDescription) {
-        Task task = findTaks(id).orElseThrow(() -> new IllegalArgumentException("Task with ID: " + id + " not found"));
+        Task task = findTask(id).orElseThrow(() -> new IllegalArgumentException("Task with ID: " + id + " not found"));
         task.updateDescription(newDescription);
         System.out.println("Task updated successfully (ID: " + task.getId() + ")");
     }
 
     public void deleteTask(String id) {
-        Task task = findTaks(id).orElseThrow(() -> new IllegalArgumentException("Task with ID: " + id + " not found"));
+        Task task = findTask(id).orElseThrow(() -> new IllegalArgumentException("Task with ID: " + id + " not found"));
         tasks.remove(task);
         System.out.println("Task deleted successfully (ID: " + task.getId() + ")");
     }
 
-    public Optional<Task> findTaks(String id) {
+    public void markInProgressTask(String id){
+        Task task = findTask(id).orElseThrow(() -> new IllegalArgumentException("Task with ID " + id + " not found!"));
+        task.markInProgress();
+    }
+
+    public void markDoneTask(String id){
+        Task task = findTask(id).orElseThrow(() -> new IllegalArgumentException("Task with ID " + id + " not found!"));
+        task.markDone();
+    }
+
+    public void listTasks(String type){
+        for (Task task : tasks){
+            String status = task.getStatus().toString().strip();
+            if (type.equals("All") || status.equals(type)){
+                System.out.println(task.toString());
+            }
+        }
+    }
+
+    public Optional<Task> findTask(String id) {
         return tasks.stream().filter((task) -> task.getId() == Integer.parseInt(id)).findFirst();
     }
 }
