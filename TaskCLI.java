@@ -1,8 +1,8 @@
 public class TaskCLI {
     public static void main(String[] args) {
         if (args.length < 1) {
-           System.out.println("Insufficient arguments");
-           System.exit(0);
+            System.out.println("Insufficient arguments");
+            System.exit(0);
         }
 
         String command = args[0];
