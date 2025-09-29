@@ -1,12 +1,12 @@
 public class TaskCLI {
     public static void main(String[] args) {
+        TaskManager taskManager = new TaskManager();
         if (args.length < 1) {
             System.out.println("Insufficient arguments");
             System.exit(0);
         }
 
         String command = args[0];
-        TaskManager taskManager = new TaskManager();
 
         switch (command) {
             case "add":
@@ -27,7 +27,7 @@ public class TaskCLI {
                 if (args.length < 2) {
                     System.out.println("Usage: TaskCLI delete <Task ID>");
                 }
-                //taskManager.deleteTask(args[1]);
+                taskManager.deleteTask(args[1]);
                 break;
             case "mark-in-progress":
                 if (args.length < 2) {

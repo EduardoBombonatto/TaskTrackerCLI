@@ -28,13 +28,13 @@ public class Task {
     }
 
     public String taskToJson() {
-        return "{\"id\":\"" + id + "\",\n \"description\":\"" + description.strip() + "\",\n \"status\":\"" + status.toString() +
-                "\",\n \"createdAt\":\"" + createdAt + "\",\n \"updatedAt\":\"" + updatedAt + "\"\n}";
+        return "{\"id\":\"" + id + "\", \"description\":\"" + description.strip() + "\", \"status\":\"" + status.toString() +
+                "\", \"createdAt\":\"" + createdAt + "\", \"updatedAt\":\"" + updatedAt + "\"}";
     }
 
     public static Task jsonToTask(String json) {
         json = json.replace("{", "").replace("}", "").replace("\"", "");
-        String[] field = json.split(","); //id:1, decription:New task ...
+        String[] field = json.split(",");
 
         String id = field[0].split(":")[1].strip();
         String description = field[1].split(":")[1].strip();

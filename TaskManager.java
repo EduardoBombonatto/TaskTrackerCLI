@@ -12,18 +12,24 @@ public class TaskManager {
     private List<Task> tasks;
 
     public TaskManager() {
-        this.tasks = new ArrayList<>();
+        this.tasks = loadTasks();
     }
 
     private List<Task> loadTasks() {
         List<Task> tasks = new ArrayList<>();
-        if (!Files.exists(FILE_PATH)) {
+
+        if (!Files.exists(FILE_PATH)){
             return new ArrayList<>();
         }
 
         try {
             String fileContent = Files.readString(FILE_PATH);
-            String[] tasksList = fileContent.replace("[", "").replace("]", "").split(",");
+            if (fileContent.isEmpty()) {
+                return new ArrayList<>();
+            }
+            String[] tasksList = fileContent.replace("[", "")
+                    .replace("]", "")
+                    .split("},");
 
             for (String taskJson : tasksList) {
                 if (!taskJson.endsWith("}")) {
@@ -67,6 +73,12 @@ public class TaskManager {
         Task task = findTaks(id).orElseThrow(() -> new IllegalArgumentException("Task with ID: " + id + " not found"));
         task.updateDescription(newDescription);
         System.out.println("Task updated successfully (ID: " + task.getId() + ")");
+    }
+
+    public void deleteTask(String id) {
+        Task task = findTaks(id).orElseThrow(() -> new IllegalArgumentException("Task with ID: " + id + " not found"));
+        tasks.remove(task);
+        System.out.println("Task deleted successfully (ID: " + task.getId() + ")");
     }
 
     public Optional<Task> findTaks(String id) {
