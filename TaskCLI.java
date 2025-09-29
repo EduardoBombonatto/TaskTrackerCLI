@@ -21,7 +21,7 @@ public class TaskCLI {
                     System.out.println("Usage: TaskCLI update <Task ID> <Description Update");
                     System.exit(0);
                 }
-                //taskManager.updateTask(args[1], args[2]);
+                taskManager.updateTask(args[1], args[2]);
                 break;
             case "delete":
                 if (args.length < 2) {

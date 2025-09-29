@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class TaskManager {
     private final Path FILE_PATH = Path.of("tasks.json");
@@ -48,7 +49,7 @@ public class TaskManager {
         }
         sb.append("\n]");
 
-        String jsonContent =  sb.toString();
+        String jsonContent = sb.toString();
         try {
             Files.writeString(FILE_PATH, jsonContent);
         } catch (IOException e) {
@@ -60,5 +61,15 @@ public class TaskManager {
         Task newTask = new Task(description);
         tasks.add(newTask);
         System.out.println("Task added Successfully (ID: " + newTask.getId() + ")");
+    }
+
+    public void updateTask(String id, String newDescription) {
+        Task task = findTaks(id).orElseThrow(() -> new IllegalArgumentException("Task with ID: " + id + " not found"));
+        task.updateDescription(newDescription);
+        System.out.println("Task updated successfully (ID: " + task.getId() + ")");
+    }
+
+    public Optional<Task> findTaks(String id) {
+        return tasks.stream().filter((task) -> task.getId() == Integer.parseInt(id)).findFirst();
     }
 }

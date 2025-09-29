@@ -22,6 +22,11 @@ public class Task {
         return id;
     }
 
+    public void updateDescription(String description) {
+        this.description = description;
+        this.updatedAt = LocalDateTime.now();
+    }
+
     public String taskToJson() {
         return "{\"id\":\"" + id + "\",\n \"description\":\"" + description.strip() + "\",\n \"status\":\"" + status.toString() +
                 "\",\n \"createdAt\":\"" + createdAt + "\",\n \"updatedAt\":\"" + updatedAt + "\"\n}";
